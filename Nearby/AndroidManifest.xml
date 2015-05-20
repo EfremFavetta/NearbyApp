@@ -33,6 +33,11 @@
             android:name="com.progetto.nearby.home.HomeActivity"
             android:label="@string/title_activity_home" >
         </activity>
+        <provider
+            android:name="com.progetto.nearby.DatabaseLocale.ContentProvider"
+            android:authorities="com.progetto.nearby.databaselocale.contentprovider"
+            android:exported="false" >
+        </provider>
     </application>
 
 </manifest>
