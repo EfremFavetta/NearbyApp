@@ -16,7 +16,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		btnHome = (Button) findViewById(R.id.button1);
+		btnHome = (Button) findViewById(R.id.btnHome);
 		btnHome.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -24,6 +24,7 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
 				startActivity(homeIntent);
+				MainActivity.this.finish();
 			}
 		});
 	}
