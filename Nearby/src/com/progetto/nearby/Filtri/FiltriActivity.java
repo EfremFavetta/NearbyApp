@@ -1,4 +1,4 @@
-package com.progetto.nearby;
+package com.progetto.nearby.Filtri;
 
 import java.io.UnsupportedEncodingException;
 
@@ -23,8 +23,11 @@ import android.widget.Toast;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.progetto.nearby.R;
+import com.progetto.nearby.R.id;
+import com.progetto.nearby.R.layout;
 
-public class SettingsActivity extends Activity {
+public class FiltriActivity extends Activity {
 
 	private TextView text;
 	private Button insert;
