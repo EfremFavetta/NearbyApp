@@ -5,6 +5,8 @@ import java.io.UnsupportedEncodingException;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,9 +18,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 public class SettingsActivity extends Activity {
 
@@ -50,29 +54,12 @@ public class SettingsActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				JSONObject jsonParams = new JSONObject();
-				
-		        try {
-					jsonParams.put("notes", "Test api support");
-					HttpEntity entity;
-					entity = new StringEntity(jsonParams.toString());
-					//entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-					client.post(getApplicationContext(), "http://nearby.altervista.org/api.php?action=insert_offerts", entity, "application/json",
-			                new JsonHttpResponseHandler(){
-
-								@Override
-								public void onSuccess(int statusCode,
-										Header[] headers, JSONObject response) {
-									// TODO Auto-generated method stub
-									//super.onSuccess(statusCode, headers, response);
-									Log.d("2", response.toString());
-									Log.d("2", response.toString());
-									
-									text.setText("" + response.toString());
-								}
-			        	
-			        });
-					
+				JSONObject object = new JSONObject();
+				StringEntity entity = null;
+				try {
+					object.put("title", "desc");
+					entity = new StringEntity(object.toString());
+					entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -80,7 +67,26 @@ public class SettingsActivity extends Activity {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		        
+				
+				client.post(getApplicationContext(), "http://nearby.altervista.org/postmetiu.php", entity, "application/json", new JsonHttpResponseHandler(){
+
+					@Override
+					public void onSuccess(int statusCode, Header[] headers,
+							JSONArray response) {
+						// TODO Auto-generated method stub
+						super.onSuccess(statusCode, headers, response);
+						Log.d("result", response.toString());
+						Toast.makeText(getApplicationContext(), response.toString(), Toast.LENGTH_SHORT).show();
+					}
+
+					@Override
+					public void onFailure(int statusCode, Header[] headers,
+							String responseString, Throwable throwable) {
+						// TODO Auto-generated method stub
+						super.onFailure(statusCode, headers, responseString, throwable);
+					}
+					
+				});
 			}
 		});
 		

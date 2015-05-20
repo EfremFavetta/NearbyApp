@@ -12,5 +12,6 @@
     <string name="title_activity_home">HomeActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>
