@@ -56,7 +56,7 @@ public class FiltriActivity extends Activity {
 				JSONObject object = new JSONObject();
 				StringEntity entity = null;
 				try {
-					object.put("title", "desc");
+					object.put("title", "zecchi gay!");
 					entity = new StringEntity(object.toString());
 					entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 				} catch (JSONException e) {
@@ -67,7 +67,7 @@ public class FiltriActivity extends Activity {
 					e.printStackTrace();
 				}
 				
-				client.post(getApplicationContext(), "http://nearby.altervista.org/postmetiu.php", entity, "application/json", new JsonHttpResponseHandler(){
+				client.post(getApplicationContext(), "http://nearby.altervista.org/test/index.php/insert_offer", entity, "application/json", new JsonHttpResponseHandler(){
 
 					@Override
 					public void onSuccess(int statusCode, Header[] headers,

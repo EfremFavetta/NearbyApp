@@ -46,11 +46,17 @@
             android:name="com.progetto.nearby.home.HomeActivity"
             android:label="@string/title_activity_home" >
         </activity>
+        <provider
+            android:name="com.progetto.nearby.DatabaseLocale.ContentProvider"
+            android:authorities="com.progetto.nearby.databaselocale.contentprovider"
+            android:exported="false" >
+        </provider>
+
         
         <meta-data
 		    android:name="com.google.android.geo.API_KEY"
 		    android:value="AIzaSyBY00f5kJiEtdmvp4LMjgAFR85DuHyRNzY"/>
-        
+
     </application>
 
 </manifest>

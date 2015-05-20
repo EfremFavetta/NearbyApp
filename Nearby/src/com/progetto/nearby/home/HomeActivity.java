@@ -1,15 +1,22 @@
 package com.progetto.nearby.home;
 
-import com.progetto.nearby.R;
-import com.progetto.nearby.navigationdrawer.NavigationDrawerFragment;
 
-import android.app.Activity;
 import android.app.ActionBar;
+import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.widget.DrawerLayout;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.progetto.nearby.R;
+import com.progetto.nearby.Filtri.FiltriActivity;
+import com.progetto.nearby.navigationdrawer.NavigationDrawerFragment;
 
 public class HomeActivity extends Activity implements
 		NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -77,7 +84,7 @@ public class HomeActivity extends Activity implements
 			// Only show items in the action bar relevant to this screen
 			// if the drawer is not showing. Otherwise, let the drawer
 			// decide what to show in the action bar.
-			getMenuInflater().inflate(R.menu.home, menu);
+			getMenuInflater().inflate(R.menu.main, menu);
 			restoreActionBar();
 			return true;
 		}
@@ -91,6 +98,8 @@ public class HomeActivity extends Activity implements
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			Intent filtriIntent = new Intent(HomeActivity.this, FiltriActivity.class);
+			startActivity(filtriIntent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
