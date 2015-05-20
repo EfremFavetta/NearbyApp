@@ -66,6 +66,8 @@ public class SettingsActivity extends Activity {
 									// TODO Auto-generated method stub
 									//super.onSuccess(statusCode, headers, response);
 									Log.d("2", response.toString());
+									Log.d("2", response.toString());
+									
 									text.setText("" + response.toString());
 								}
 			        	
