@@ -3,7 +3,6 @@ package com.progetto.nearby.Filtri;
 import java.io.UnsupportedEncodingException;
 
 import org.apache.http.Header;
-import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
@@ -22,10 +21,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.progetto.nearby.R;
-import com.progetto.nearby.R.id;
-import com.progetto.nearby.R.layout;
 
 public class FiltriActivity extends Activity {
 

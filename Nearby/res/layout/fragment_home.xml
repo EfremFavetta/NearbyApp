@@ -2,15 +2,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.progetto.nearby.HomeActivity$PlaceholderFragment" >
+    xmlns:app="http://schemas.android.com/apk/res/com.progetto.nearby">
+<!--     android:paddingBottom="@dimen/activity_vertical_margin" -->
+<!--     android:paddingLeft="@dimen/activity_horizontal_margin" -->
+<!--     android:paddingRight="@dimen/activity_horizontal_margin" -->
+<!--     android:paddingTop="@dimen/activity_vertical_margin" -->
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+	<!-- MAIN CONTENT -->
+    <fragment
+       android:id="@+id/mapFragment"
+       android:name="com.google.android.gms.maps.MapFragment"
+       android:layout_width="match_parent"
+       android:layout_height="fill_parent" />
+
+    <com.hollowsoft.library.slidingdrawer.SlidingDrawer 
+		android:id="@+id/sliding_drawer"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		app:content="@+id/drawer_content"
+		app:handle="@+id/drawer_handle" >
+        
+        <RelativeLayout
+            android:id="@+id/drawer_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="false"
+            android:background="@android:color/holo_green_dark"
+            android:layout_gravity="center"
+            android:layout_centerHorizontal="true"
+        	android:rotation="180" >
+            
+        </RelativeLayout>
+        
+        <LinearLayout
+            android:id="@+id/drawer_handle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_transparent"
+            android:orientation="vertical" >
+            
+	        <TextView
+                android:id="@+id/txtSlide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LISTA"
+                android:textColor="@color/orange"
+                android:gravity="center" >
+            </TextView>
+            
+	        <ImageView
+	            android:id="@+id/drawer_handle_image"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/hand"
+	    		android:layout_centerHorizontal="true" />
+	        
+        </LinearLayout>
+        
+        
+    </com.hollowsoft.library.slidingdrawer.SlidingDrawer>
+    
+<!--     <com.hollowsoft.library.slidingdrawer.SlidingDrawer -->
+<!--         android:id="@+id/sliding_drawer" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="match_parent" -->
+<!--         app:content="@+id/drawer_content" -->
+<!--         app:topOffset="0dp" -->
+<!--         app:handle="@+id/drawer_handle" -->
+<!--         android:rotation="180" > -->
+        
+        
+<!--         SLIDING LAYOUT -->
+<!--         <RelativeLayout -->
+<!--             android:id="@+id/drawer_content" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:clickable="true" -->
+<!--             android:focusable="false" -->
+<!--             android:background="@android:color/transparent" -->
+<!--             android:layout_gravity="center" -->
+<!--             android:layout_centerHorizontal="true" -->
+<!--         	android:rotation="180" > -->
+                
+<!-- 	            <LinearLayout -->
+<!-- 	                android:layout_width="wrap_content" -->
+<!-- 	                android:layout_height="wrap_content" -->
+<!-- 	                android:paddingTop="7dp" -->
+<!-- 	                android:paddingBottom="9dp" -->
+<!-- 	                android:background="@color/drawer_content_background" -->
+<!-- 	                android:layout_alignParentTop="true" -->
+<!-- 	        		android:layout_centerHorizontal="true" -->
+<!-- 	        		android:layout_gravity="center" > -->
+					
+	                
+<!-- 	            </LinearLayout> -->
+            
+<!--         </RelativeLayout> -->
+        
+<!--         <ImageView -->
+<!--             android:id="@+id/drawer_handle" -->
+<!--             android:layout_width="207dp" -->
+<!--             android:layout_height="40dp" -->
+<!--             android:scaleType="fitStart" -->
+<!--             android:src="@drawable/freccia_menu" -->
+<!--     		android:layout_centerHorizontal="true" -->
+<!--     		android:layout_below="@+id/layoutCategoria" -->
+<!--     		android:rotation="180" > -->
+<!--         </ImageView> -->
+        
+<!--     </com.hollowsoft.library.slidingdrawer.SlidingDrawer> -->
+    
 
 </RelativeLayout>
