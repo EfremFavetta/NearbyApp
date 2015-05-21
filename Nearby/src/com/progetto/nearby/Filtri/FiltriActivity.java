@@ -31,7 +31,7 @@ public class FiltriActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_settings);
+		setContentView(R.layout.activity_filtri);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		text = (TextView) findViewById(R.id.textView1);
 		insert = (Button) findViewById(R.id.button1);
