@@ -82,6 +82,12 @@
 			    android:tag="POI"
 			    android:text="Punti d'interesse" />            
         </RadioGroup>
+
+		<Button
+		    android:id="@+id/btnCerca"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:text="Cerca" />
         
     </LinearLayout>
 

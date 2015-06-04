@@ -1,5 +1,9 @@
 package com.progetto.nearby;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 public class Tools {
 	
 	public static String SERVICE_PATH = "http://nearby.altervista.org";
@@ -14,6 +18,13 @@ public class Tools {
 	
 	
 	public static GPSProvider gpsProvider;
+	private static NetworkInfo networkInfo;
+	private static ConnectivityManager connectivityManager;
 	
-	
+	public static boolean isNetworkEnabled(Context context) {
+		connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		networkInfo = connectivityManager.getActiveNetworkInfo();
+		
+		return networkInfo != null && networkInfo.isConnectedOrConnecting();
+	}
 }

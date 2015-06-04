@@ -1,33 +1,18 @@
 package com.progetto.nearby.Filtri;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
-
-import org.apache.http.Header;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicHeader;
-import org.apache.http.protocol.HTTP;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.progetto.nearby.R;
 import com.progetto.nearby.Tools;
 
@@ -106,6 +91,7 @@ public class FiltriActivity extends Activity {
 	private SeekBar seekbarDistanza;
 	private Spinner spinnerCategorie;
 	private RadioGroup radioTipologia;
+	private Button btnCerca;
 	
 	
 	@Override
@@ -113,11 +99,14 @@ public class FiltriActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_filtri);
 		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
 		sharedPreferences = getSharedPreferences(Tools.PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
 		
 		seekbarDistanza = (SeekBar)findViewById(R.id.seek_bar_distanza);
 		spinnerCategorie = (Spinner)findViewById(R.id.spinnerCategorie);
 		radioTipologia = (RadioGroup)findViewById(R.id.rdoTipologia);
+		btnCerca = (Button)findViewById(R.id.btnCerca);
 		
 		
 		// Setta barra della distanza
@@ -170,6 +159,14 @@ public class FiltriActivity extends Activity {
 			radioTipologia.check(R.id.rbAC);
 		else
 			radioTipologia.check(R.id.rbPOI);
+		
+		
+		btnCerca.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
 	}
 	
 	@Override
@@ -226,6 +223,15 @@ public class FiltriActivity extends Activity {
 			.apply();
 		
 		super.onDestroy();
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if(item.getItemId() == android.R.id.home) {
+        	onBackPressed();
+            return true;
+        }
+		return super.onOptionsItemSelected(item);
 	}
 	
 }
