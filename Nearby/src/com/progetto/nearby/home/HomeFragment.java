@@ -7,9 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.LoaderManager.LoaderCallbacks;
-import android.content.Loader;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,12 +27,11 @@ import com.progetto.nearby.R;
 import com.progetto.nearby.Tools;
 import com.progetto.nearby.models.Place;
 
-public class HomeFragment extends MapFragment implements OnMapReadyCallback, LoaderCallbacks<Cursor>  {
+public class HomeFragment extends MapFragment implements OnMapReadyCallback  {
 
 	private GoogleMap googleMap;
 	private ListView lstPlaces;
 	private static boolean isFirstTimeOpen = true;
-	private HomeListCursorAdapter cursorAdapter;
 	private PlacesAdapter adapter;
 	private ArrayList<Place> allPlaces = new ArrayList<Place>();
 	
@@ -181,20 +177,4 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 			googleMap.setMyLocationEnabled(false);
 		super.onDestroy();
 	}
-
-	@Override
-	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		
-		return null;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-		cursorAdapter.swapCursor(data);
-	}
-
-	@Override
-	public void onLoaderReset(Loader<Cursor> loader) {
-		cursorAdapter.swapCursor(null);
-	}	
 }
