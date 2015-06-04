@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +27,7 @@ import com.progetto.nearby.R;
 
 public class FiltriActivity extends Activity {
 
-	private TextView text;
+	/*private TextView text;
 	private Button insert;
 	private AsyncHttpClient client;
 	@Override
@@ -89,5 +91,11 @@ public class FiltriActivity extends Activity {
 			}
 		});
 		
-	}
+	}*/
+	
+	public final static String TAG = "FILTRI_ACTIVITY";
+	
+	private SeekBar seekbarDistanza;
+	private Spinner spinnerCategorie;
+	
 }
