@@ -6,8 +6,10 @@ import android.net.NetworkInfo;
 
 public class Tools {
 	
-	public static String SERVICE_PATH = "http://nearby.altervista.org";
-	public static String GET_URL = SERVICE_PATH + "/test/index.php/places";
+	public static String SERVICE_URL = "http://nearby.altervista.org";
+	public static String PLACES_URL = SERVICE_URL + "/test/index.php/places";
+	public static String CATEGORIES_URL = SERVICE_URL + "/test/index.php/categories";
+	public static String SUBCATEGORIES_URL = SERVICE_URL + "/test/index.php/subcategories";
 	
 	public static final String PREFERENCES_FILE_NAME = "nearbypreferences";
 	public static final String PREFERNCES_DISTANZA = "distanza";

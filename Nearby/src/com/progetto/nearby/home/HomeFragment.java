@@ -62,7 +62,7 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback  {
 	private void getPlaces() {
 		if(Tools.isNetworkEnabled(getActivity())) {
 			AsyncHttpClient client = new AsyncHttpClient();
-			client.get(Tools.GET_URL, new JsonHttpResponseHandler(){
+			client.get(Tools.PLACES_URL, new JsonHttpResponseHandler(){
 	
 				@Override
 				public void onSuccess(int statusCode, Header[] headers,	JSONArray response) {

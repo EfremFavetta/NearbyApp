@@ -1,6 +1,12 @@
 package com.progetto.nearby.Filtri;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,9 +18,15 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.progetto.nearby.R;
 import com.progetto.nearby.Tools;
+import com.progetto.nearby.models.Categories;
+import com.progetto.nearby.models.Subcategories;
 
 public class FiltriActivity extends Activity {
 
@@ -86,11 +98,15 @@ public class FiltriActivity extends Activity {
 	
 	public final static String TAG = "FILTRI_ACTIVITY";
 	
-	SharedPreferences sharedPreferences;
+	private SharedPreferences sharedPreferences;
+	private List<Categories> lstCategories;
+	private List<Subcategories> lstSubcategories;
 	
 	private SeekBar seekbarDistanza;
 	private Spinner spinnerCategorie;
+	private Spinner spinnerSottocategorie;
 	private RadioGroup radioTipologia;
+	private TextView txtDistanza;
 	private Button btnCerca;
 	
 	
@@ -105,44 +121,20 @@ public class FiltriActivity extends Activity {
 		
 		seekbarDistanza = (SeekBar)findViewById(R.id.seek_bar_distanza);
 		spinnerCategorie = (Spinner)findViewById(R.id.spinnerCategorie);
+		spinnerSottocategorie = (Spinner)findViewById(R.id.spinnerSottocategorie);
 		radioTipologia = (RadioGroup)findViewById(R.id.rdoTipologia);
 		btnCerca = (Button)findViewById(R.id.btnCerca);
+		txtDistanza = (TextView)findViewById(R.id.txtDistanza);
+		
+		getCategories();
 		
 		
 		// Setta barra della distanza
 		int distanza = sharedPreferences.getInt(Tools.PREFERNCES_DISTANZA, Tools.FILTRO_DISTANZA_DEFAULT);
-		int progress;
-		switch (distanza) {
-		case 500:
-			progress = 0;
-			break;
-			
-		case 1000:
-			progress = 1;
-			break;
-			
-		case 2000:
-			progress = 2;
-			break;
-			
-		case 5000:
-		default:
-			progress = 3;
-			break;
-			
-		case 10000:
-			progress = 4;
-			break;
-			
-		case 20000:
-			progress = 5;
-			break;
-			
-		case 50000:
-			progress = 6;
-			break;
-		}
+		int progress = getIndexFromDistanza(distanza);
+		
 		seekbarDistanza.setProgress(progress);
+		txtDistanza.setText("" + distanza + "Km");
 		
 		
 		// Setta spinner categorie
@@ -167,47 +159,120 @@ public class FiltriActivity extends Activity {
 				finish();
 			}
 		});
+		
+		seekbarDistanza.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+				txtDistanza.setText("" + getDistanzaFromIndex(progress) + "Km");
+			}
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) { }
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) { }
+		});
 	}
 	
+
+	private void getCategories() {
+		lstCategories = new ArrayList<Categories>();
+		lstSubcategories = new ArrayList<Subcategories>();
+		
+		if(Tools.isNetworkEnabled(this)) {
+			AsyncHttpClient clientCategories = new AsyncHttpClient();
+			clientCategories.get(Tools.CATEGORIES_URL, new JsonHttpResponseHandler(){
+	
+				@Override
+				public void onSuccess(int statusCode, Header[] headers,	JSONArray response) {
+					JSONObject jsonCategories;
+					for(int i = 0; i < response.length(); i++)
+					{
+						try {
+							jsonCategories = response.getJSONObject(i);
+							lstCategories.add(Categories.decodeJSON(jsonCategories));
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+					
+				}	
+				
+				@Override
+				public void onFailure(int statusCode, Header[] headers,
+						String responseString, Throwable throwable) {
+					Toast.makeText(FiltriActivity.this, "Errore nel recupero dei dati", Toast.LENGTH_LONG).show();
+					super.onFailure(statusCode, headers, responseString, throwable);
+				}
+				
+				@Override
+				public void onFailure(int statusCode, Header[] headers,
+						Throwable throwable, JSONArray errorResponse) {
+					Toast.makeText(FiltriActivity.this, "Errore nel recupero dei dati", Toast.LENGTH_LONG).show();
+					super.onFailure(statusCode, headers, throwable, errorResponse);
+				}
+				
+				@Override
+				public void onFailure(int statusCode, Header[] headers,
+						Throwable throwable, JSONObject errorResponse) {
+					Toast.makeText(FiltriActivity.this, "Errore nel recupero dei dati", Toast.LENGTH_LONG).show();
+					super.onFailure(statusCode, headers, throwable, errorResponse);
+				}
+			});
+			
+			AsyncHttpClient clientSubcategories = new AsyncHttpClient();
+			clientSubcategories.get(Tools.SUBCATEGORIES_URL, new JsonHttpResponseHandler(){
+				
+				@Override
+				public void onSuccess(int statusCode, Header[] headers,	JSONArray response) {
+					JSONObject jsonSubcategories;
+					for(int i = 0; i < response.length(); i++)
+					{
+						try {
+							jsonSubcategories = response.getJSONObject(i);
+							lstSubcategories.add(Subcategories.decodeJSON(jsonSubcategories));
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+					}
+					
+				}	
+				
+				@Override
+				public void onFailure(int statusCode, Header[] headers,
+						String responseString, Throwable throwable) {
+					Toast.makeText(FiltriActivity.this, "Errore nel recupero dei dati", Toast.LENGTH_LONG).show();
+					super.onFailure(statusCode, headers, responseString, throwable);
+				}
+				
+				@Override
+				public void onFailure(int statusCode, Header[] headers,
+						Throwable throwable, JSONArray errorResponse) {
+					Toast.makeText(FiltriActivity.this, "Errore nel recupero dei dati", Toast.LENGTH_LONG).show();
+					super.onFailure(statusCode, headers, throwable, errorResponse);
+				}
+				
+				@Override
+				public void onFailure(int statusCode, Header[] headers,
+						Throwable throwable, JSONObject errorResponse) {
+					Toast.makeText(FiltriActivity.this, "Errore nel recupero dei dati", Toast.LENGTH_LONG).show();
+					super.onFailure(statusCode, headers, throwable, errorResponse);
+				}
+			});
+			
+		} else {
+			Toast.makeText(this, "Nessuna connessione disponibile!", Toast.LENGTH_LONG).show();
+		}		
+	}
+
+
 	@Override
 	protected void onDestroy() { // Salvo lo stato dei filtri all'uscita dell'activity
 		
 		// Salva distanza
-		int distanza;
-		switch (seekbarDistanza.getProgress()) {
-			case 0:
-				distanza = 500;
-				break;
-				
-			case 1:
-				distanza = 1000;
-				break;
-				
-			case 2:
-				distanza = 2000;
-				break;
-				
-			case 3:
-			default:
-				distanza = 5000;
-				break;
-				
-			case 4:
-				distanza = 10000;
-				break;
-				
-			case 5:
-				distanza = 20000;
-				break;
-				
-			case 6:
-				distanza = 50000;
-				break;
-		}
+		int distanza = getDistanzaFromIndex(seekbarDistanza.getProgress());
 		
-		
+
 		// Salva categoria
-		String categoria = spinnerCategorie.getSelectedItem().toString();
+		String categoria = "";//spinnerCategorie.getSelectedItem().toString();
 		
 		
 		// Salva tipologia (Attività commerciale o POI)
@@ -234,4 +299,43 @@ public class FiltriActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	private int getDistanzaFromIndex(int index) {
+		switch (index) {
+			case 0:
+				return 500;
+			case 1:
+				return 1000;
+			case 2:
+				return 2000;
+			case 3:
+			default:
+				return 5000;
+			case 4:
+				return 10000;
+			case 5:
+				return 20000;
+			case 6:
+				return 50000;
+		}
+	}
+
+	private int getIndexFromDistanza(int distanza) {
+		switch (distanza) {
+			case 500:
+				return 0;
+			case 1000:
+				return 1;
+			case 2000:
+				return 2;
+			case 5000:
+			default:
+				return 3;
+			case 10000:
+				return 4;
+			case 20000:
+				return 5;
+			case 50000:
+				return 6;
+		}
+	}
 }
