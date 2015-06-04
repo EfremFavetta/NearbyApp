@@ -38,7 +38,6 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 	private HomeListCursorAdapter cursorAdapter;
 	private PlacesAdapter adapter;
 	private ArrayList<Place> allPlaces = new ArrayList<Place>();
-
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -83,8 +82,7 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 					adapter = new PlacesAdapter(getActivity().getApplicationContext(),
 							allPlaces);
 					lstPlaces.setAdapter(adapter);
-				}
-	
+				}	
 				
 				@Override
 				public void onFailure(int statusCode, Header[] headers,

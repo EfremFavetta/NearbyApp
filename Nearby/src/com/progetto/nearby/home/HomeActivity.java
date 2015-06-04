@@ -28,7 +28,9 @@ public class HomeActivity extends Activity implements
 	 * {@link #restoreActionBar()}.
 	 */
 	private CharSequence mTitle;
-
+	private HomeFragment homefragment;
+	private FragmentManager fragmentmanager;
+	private static final String tag_fragment = "homefragment";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,20 +39,30 @@ public class HomeActivity extends Activity implements
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
-
+		
 		// Set up the drawer.
 		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
 				(DrawerLayout) findViewById(R.id.drawer_layout));
-	}
+		}
 
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		// update the main content by replacing fragments
-		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.container,
-						HomeFragment.newInstance()).commit();
+		fragmentmanager = getFragmentManager();
+		switch(position)
+		{
+			case 0:
+				if(fragmentmanager.findFragmentByTag(tag_fragment) == null)
+				{
+					homefragment = HomeFragment.newInstance();
+					fragmentmanager
+					.beginTransaction()
+					.replace(R.id.container,
+						homefragment, tag_fragment).commit();
+				}
+			break;
+		}
+		
 	}
 
 	public void onSectionAttached(int number) {
