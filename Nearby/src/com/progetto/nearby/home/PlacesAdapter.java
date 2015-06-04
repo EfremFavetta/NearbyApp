@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.progetto.nearby.R;
+import com.progetto.nearby.models.Place;
 
 public class PlacesAdapter extends BaseAdapter {
 

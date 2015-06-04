@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,6 +29,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.progetto.nearby.R;
 import com.progetto.nearby.Tools;
+import com.progetto.nearby.models.Place;
 
 public class HomeFragment extends MapFragment implements OnMapReadyCallback, LoaderCallbacks<Cursor>  {
 
@@ -37,14 +39,6 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 	private HomeListCursorAdapter cursorAdapter;
 	private PlacesAdapter adapter;
 	private ArrayList<Place> allPlaces = new ArrayList<Place>();
-	private JSONObject jsonPlace;
-	private Place place;
-	private static final String tag_id = "id_place";
-	private static final String tag_name = "place_name";
-	private static final String tag_description = "place_description";
-	private static final String tag_gps = "gps";
-	private static final String tag_phone = "place_phone";
-	private static final String tag_town = "town_name";
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,44 +64,51 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 	}
 
 	private void getPlaces() {
-		// TODO Auto-generated method stub
-		AsyncHttpClient client = new AsyncHttpClient();
-		client.get(Tools.GET_URL, new JsonHttpResponseHandler(){
-
-			@Override
-			public void onSuccess(int statusCode, Header[] headers,
-					JSONArray response) {
-				// TODO Auto-generated method stub
-				for(int i = 0; i < response.length(); i++)
-				{
-					try {
-						jsonPlace = response.getJSONObject(i);
-						setPlace();
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+		if(Tools.isNetworkEnabled(getActivity())) {
+			AsyncHttpClient client = new AsyncHttpClient();
+			client.get(Tools.GET_URL, new JsonHttpResponseHandler(){
+	
+				@Override
+				public void onSuccess(int statusCode, Header[] headers,	JSONArray response) {
+					JSONObject jsonPlace;
+					for(int i = 0; i < response.length(); i++)
+					{
+						try {
+							jsonPlace = response.getJSONObject(i);
+							allPlaces.add(Place.decodeJSON(jsonPlace));
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
 					}
+					adapter = new PlacesAdapter(getActivity().getApplicationContext(),
+							allPlaces);
+					lstPlaces.setAdapter(adapter);
+				}	
+				
+				@Override
+				public void onFailure(int statusCode, Header[] headers,
+						String responseString, Throwable throwable) {
+					Toast.makeText(getActivity(), "Errore nel recupero dei dati", Toast.LENGTH_LONG).show();
+					super.onFailure(statusCode, headers, responseString, throwable);
 				}
-				adapter = new PlacesAdapter(getActivity().getApplicationContext(),
-						allPlaces);
-				lstPlaces.setAdapter(adapter);
-			}
-
-			private void setPlace() throws JSONException {
-				// TODO Auto-generated method stub
-				place = new Place();
-				place.id = jsonPlace.getInt(tag_id);
-				place.nome = jsonPlace.getString(tag_name);
-				place.description = jsonPlace.getString(tag_description);
-				String gps = jsonPlace.getString(tag_gps);
-				String[] gpssplit = gps.split(","); 
-				place.lat = Float.parseFloat(gpssplit[0]);
-				place.longit = Float.parseFloat(gpssplit[1]);
-				place.telefono = jsonPlace.getString(tag_phone);
-				place.città = jsonPlace.getString(tag_town);
-				allPlaces.add(place);
-			}
-		});
+				
+				@Override
+				public void onFailure(int statusCode, Header[] headers,
+						Throwable throwable, JSONArray errorResponse) {
+					Toast.makeText(getActivity(), "Errore nel recupero dei dati", Toast.LENGTH_LONG).show();
+					super.onFailure(statusCode, headers, throwable, errorResponse);
+				}
+				
+				@Override
+				public void onFailure(int statusCode, Header[] headers,
+						Throwable throwable, JSONObject errorResponse) {
+					Toast.makeText(getActivity(), "Errore nel recupero dei dati", Toast.LENGTH_LONG).show();
+					super.onFailure(statusCode, headers, throwable, errorResponse);
+				}
+			});
+		} else {
+			Toast.makeText(getActivity(), "Nessuna connessione disponibile!", Toast.LENGTH_LONG).show();
+		}
 	}
 
 	protected void enterDetails(long id) {
@@ -163,7 +164,6 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 	}
 	
 	private void decoreMap() {
-		// TODO Auto-generated method stub
 		
 	}
 
