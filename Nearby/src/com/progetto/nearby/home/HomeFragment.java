@@ -22,6 +22,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -138,13 +139,13 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 //	        		Tools.gpsProvider.showSettingsAlert();
 //	        		isFirstTimeOpen = false;
 //	        	}
-//	        	CameraPosition cameraPosition = new CameraPosition
-//						.Builder()
-//				        .target(new LatLng(43.028316, 12.460283))
-//				        .zoom(5.2f)
-//				        .build();
-//	        	googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//	        }
+	        	CameraPosition cameraPosition = new CameraPosition
+						.Builder()
+				        .target(new LatLng(43.028316, 12.460283))
+				        .zoom(5.2f)
+				        .build();
+	        	googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+	       // }
 	        
 	        googleMap.getUiSettings().setZoomControlsEnabled(true);
 	        decoreMap();
