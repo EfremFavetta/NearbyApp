@@ -8,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.progetto.nearby.R;
 import com.progetto.nearby.Tools;
+import com.progetto.nearby.detailPlaces.DetailPlaceActivity;
 import com.progetto.nearby.models.Place;
 
 public class HomeFragment extends MapFragment implements OnMapReadyCallback, LoaderCallbacks<Cursor>  {
@@ -48,10 +50,7 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 		((MapFragment) getFragmentManager().findFragmentById(R.id.mapFragment)).getMapAsync(this);
 		
 		lstPlaces = (ListView)rootView.findViewById(R.id.lstPlaces);
-		//cursorAdapter = new HomeListCursorAdapter(getActivity(), null);
-		//lstPlaces.setAdapter(cursorAdapter);
 		getPlaces();
-		
 		lstPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -112,12 +111,12 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 	}
 
 	protected void enterDetails(long id) {
-		/*
-		Intent intent = new Intent(getActivity(), DettagliPlaceActivity.class);
-    	intent.putExtra(DettagliPlaceActivity.ID_PLACE, (int)id);
-    	
+		Intent intent = new Intent(getActivity(), DetailPlaceActivity.class);
+    	//intent.putExtra(DetailPlaceActivity.ID_PLACE, (int)id);
+    	Bundle placeBundle = new Bundle();
+    	placeBundle.putLong(Place.tag_id, id);
+    	intent.putExtras(placeBundle);
         startActivity(intent);
-        */
 	}
 
 	public static HomeFragment newInstance() {

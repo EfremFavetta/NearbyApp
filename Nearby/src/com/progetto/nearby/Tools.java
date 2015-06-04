@@ -8,6 +8,8 @@ public class Tools {
 	
 	public static String SERVICE_PATH = "http://nearby.altervista.org";
 	public static String GET_URL = SERVICE_PATH + "/test/index.php/places";
+	public static String GET_DETAIL_URL = SERVICE_PATH + "/test/index.php/place/";
+	public static String GET_IMAGE_URL = "http://nearby.altervista.org/images/";
 	
 	public static final String PREFERENCES_FILE_NAME = "nearbypreferences";
 	public static final String PREFERNCES_DISTANZA = "distanza";

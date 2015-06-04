@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.loopj.android.image.SmartImageView;
 import com.progetto.nearby.R;
 import com.progetto.nearby.models.Place;
 
@@ -46,7 +47,7 @@ public class PlacesAdapter extends BaseAdapter {
 	private class PlacesViewHolder
 	{
 		TextView txtNome,txtDistanza, txtCitta;
-		ImageView imgPlace;
+		SmartImageView imgPlace;
 	}
 	
 	@Override
@@ -60,7 +61,7 @@ public class PlacesAdapter extends BaseAdapter {
 		else
 		{
 			places_view = inflater.inflate(R.layout.cell_places, null);
-			holder.imgPlace = (ImageView) places_view.findViewById(R.id.imgPlace);
+			holder.imgPlace = (SmartImageView) places_view.findViewById(R.id.imgPlace);
 			holder.txtNome = (TextView) places_view.findViewById(R.id.txtNomePlace);
 			holder.txtCitta = (TextView) places_view.findViewById(R.id.txtCittaPlace);
 			holder.txtDistanza = (TextView) places_view.findViewById(R.id.txtDistanzaPlace);
@@ -69,6 +70,7 @@ public class PlacesAdapter extends BaseAdapter {
 		
 		Place places = (Place) getItem(position);
 		PlacesViewHolder getPlaceHolder = (PlacesViewHolder) places_view.getTag();
+		getPlaceHolder.imgPlace.setImageUrl(places.urlImg);
 		getPlaceHolder.txtNome.setText(places.nome);
 		getPlaceHolder.txtCitta.setText(places.città);
 		getPlaceHolder.txtDistanza.setText("" + places.distanza + " Km");
