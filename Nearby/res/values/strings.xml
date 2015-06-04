@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Nearby</string>
+    <string name="app_name" >Nearby</string>
     <string name="title_section1">Home</string>
     <string name="title_section2">Offerte</string>
     <string name="title_section3">Contatti</string>
