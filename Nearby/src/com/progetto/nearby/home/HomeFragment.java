@@ -43,6 +43,7 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 	private static final String tag_description = "place_description";
 	private static final String tag_gps = "gps";
 	private static final String tag_phone = "place_phone";
+	private static final String tag_town = "town_name";
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,6 +103,7 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 				place.lat = Float.parseFloat(gpssplit[0]);
 				place.longit = Float.parseFloat(gpssplit[1]);
 				place.telefono = jsonPlace.getString(tag_phone);
+				place.città = jsonPlace.getString(tag_town);
 				allPlaces.add(place);
 			}
 		});
