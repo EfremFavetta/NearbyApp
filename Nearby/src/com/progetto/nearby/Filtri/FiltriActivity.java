@@ -147,7 +147,7 @@ public class FiltriActivity extends Activity {
 		
 		// Setta spinner categorie
 		List<String> lstCategorie;
-		// TODO caricare categorie
+		//caricare categorie
 		//ArrayAdapter<String> categorieAdapter = new ArrayAdapter<String>(this, R.id.spinnerCategorie, lstCategorie);
 			//categorieAdapter.setDropDownViewResource(resource);
 		//spinnerCategorie.setAdapter(categorieAdapter);

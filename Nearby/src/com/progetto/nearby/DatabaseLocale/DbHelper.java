@@ -12,19 +12,16 @@ public class DbHelper extends SQLiteOpenHelper {
 	
 	public DbHelper(Context context) {
 		super(context, dbName, null, 1);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// TODO Auto-generated method stub
+
 		db.execSQL(PreferitiTableHelper.create);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
