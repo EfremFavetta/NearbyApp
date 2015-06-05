@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -51,12 +52,6 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 		
 		lstPlaces = (ListView)rootView.findViewById(R.id.lstPlaces);
 		getPlaces();
-		lstPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				enterDetails(id);
-			}
-		});
 		
 		super.onCreateView(inflater, container, savedInstanceState);
 		return rootView;
@@ -82,6 +77,21 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 					adapter = new PlacesAdapter(getActivity().getApplicationContext(),
 							allPlaces);
 					lstPlaces.setAdapter(adapter);
+					lstPlaces.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> arg0, View arg1,
+								int arg2, long arg3) {
+							// TODO Auto-generated method stub
+							enterDetails(arg3);
+//							Intent intent = new Intent(getActivity(), DetailPlaceActivity.class);
+//					    	//intent.putExtra(DetailPlaceActivity.ID_PLACE, (int)id);
+//					    	Bundle placeBundle = new Bundle();
+//					    	placeBundle.putLong(Place.tag_id, arg3);
+//					    	intent.putExtras(placeBundle);
+//					        startActivity(intent);
+						}
+					});
 				}	
 				
 				@Override
