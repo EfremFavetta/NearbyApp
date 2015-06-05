@@ -7,11 +7,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.progetto.nearby.R;
 import com.progetto.nearby.Tools;
+import com.progetto.nearby.detailPlaces.DetailPlaceActivity;
 import com.progetto.nearby.models.Place;
 
 public class HomeFragment extends MapFragment implements OnMapReadyCallback  {
@@ -44,16 +47,7 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback  {
 		((MapFragment) getFragmentManager().findFragmentById(R.id.mapFragment)).getMapAsync(this);
 		
 		lstPlaces = (ListView)rootView.findViewById(R.id.lstPlaces);
-		//cursorAdapter = new HomeListCursorAdapter(getActivity(), null);
-		//lstPlaces.setAdapter(cursorAdapter);
 		getPlaces();
-		
-		lstPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				enterDetails(id);
-			}
-		});
 		
 		super.onCreateView(inflater, container, savedInstanceState);
 		return rootView;
@@ -79,6 +73,21 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback  {
 					adapter = new PlacesAdapter(getActivity().getApplicationContext(),
 							allPlaces);
 					lstPlaces.setAdapter(adapter);
+					lstPlaces.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> arg0, View arg1,
+								int arg2, long arg3) {
+							// TODO Auto-generated method stub
+							enterDetails(arg3);
+//							Intent intent = new Intent(getActivity(), DetailPlaceActivity.class);
+//					    	//intent.putExtra(DetailPlaceActivity.ID_PLACE, (int)id);
+//					    	Bundle placeBundle = new Bundle();
+//					    	placeBundle.putLong(Place.tag_id, arg3);
+//					    	intent.putExtras(placeBundle);
+//					        startActivity(intent);
+						}
+					});
 				}	
 				
 				@Override
@@ -108,12 +117,12 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback  {
 	}
 
 	protected void enterDetails(long id) {
-		/*
-		Intent intent = new Intent(getActivity(), DettagliPlaceActivity.class);
-    	intent.putExtra(DettagliPlaceActivity.ID_PLACE, (int)id);
-    	
+		Intent intent = new Intent(getActivity(), DetailPlaceActivity.class);
+    	//intent.putExtra(DetailPlaceActivity.ID_PLACE, (int)id);
+    	Bundle placeBundle = new Bundle();
+    	placeBundle.putLong(Place.tag_id, id);
+    	intent.putExtras(placeBundle);
         startActivity(intent);
-        */
 	}
 
 	public static HomeFragment newInstance() {

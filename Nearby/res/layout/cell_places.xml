@@ -3,15 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ImageView
+    <com.loopj.android.image.SmartImageView
         android:id="@+id/imgPlace"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/common_signin_btn_icon_pressed_light" />
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignLeft="@+id/scrollView1"
+        android:layout_below="@+id/txtDetalheData" />
 
     <TextView
         android:id="@+id/txtDistanzaPlace"
@@ -40,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/imgPlace"
         android:layout_alignLeft="@+id/txtNomePlace"
-        android:textColor="#000"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="#000" />
 
 </RelativeLayout>
