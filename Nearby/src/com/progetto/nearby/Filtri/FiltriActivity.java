@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
@@ -137,14 +138,6 @@ public class FiltriActivity extends Activity {
 		txtDistanza.setText("" + distanza + "Km");
 		
 		
-		// Setta spinner categorie
-		List<String> lstCategorie;
-		// TODO caricare categorie
-		//ArrayAdapter<String> categorieAdapter = new ArrayAdapter<String>(this, R.id.spinnerCategorie, lstCategorie);
-			//categorieAdapter.setDropDownViewResource(resource);
-		//spinnerCategorie.setAdapter(categorieAdapter);
-		
-		
 		// Setta radioButton tipologia (Attività commerciale o POI)
 		boolean flag = sharedPreferences.getBoolean(Tools.PREFERNCES_TIPOLOGIA, true);
 		if(flag)
@@ -174,9 +167,6 @@ public class FiltriActivity extends Activity {
 	
 
 	private void getCategories() {
-		lstCategories = new ArrayList<Categories>();
-		lstSubcategories = new ArrayList<Subcategories>();
-		
 		if(Tools.isNetworkEnabled(this)) {
 			AsyncHttpClient clientCategories = new AsyncHttpClient();
 			clientCategories.get(Tools.CATEGORIES_URL, new JsonHttpResponseHandler(){
@@ -184,17 +174,24 @@ public class FiltriActivity extends Activity {
 				@Override
 				public void onSuccess(int statusCode, Header[] headers,	JSONArray response) {
 					JSONObject jsonCategories;
+					List<String> lstCategorie = new ArrayList<String>();
+					lstCategories = new ArrayList<Categories>();
+					Categories cat;
 					for(int i = 0; i < response.length(); i++)
 					{
 						try {
 							jsonCategories = response.getJSONObject(i);
-							lstCategories.add(Categories.decodeJSON(jsonCategories));
+							cat = Categories.decodeJSON(jsonCategories);
+							lstCategories.add(cat);
+							lstCategorie.add(cat.name);
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
-					}
-					
-				}	
+					}					
+					ArrayAdapter<String> categorieAdapter = new ArrayAdapter<String>(FiltriActivity.this, android.R.layout.simple_spinner_dropdown_item, lstCategorie);
+						//categorieAdapter.setDropDownViewResource(resource);
+					spinnerCategorie.setAdapter(categorieAdapter);
+				}
 				
 				@Override
 				public void onFailure(int statusCode, Header[] headers,
@@ -224,6 +221,7 @@ public class FiltriActivity extends Activity {
 				@Override
 				public void onSuccess(int statusCode, Header[] headers,	JSONArray response) {
 					JSONObject jsonSubcategories;
+					lstSubcategories = new ArrayList<Subcategories>();
 					for(int i = 0; i < response.length(); i++)
 					{
 						try {
@@ -233,7 +231,7 @@ public class FiltriActivity extends Activity {
 							e.printStackTrace();
 						}
 					}
-					
+					refreshCategories();
 				}	
 				
 				@Override
@@ -261,6 +259,23 @@ public class FiltriActivity extends Activity {
 		} else {
 			Toast.makeText(this, "Nessuna connessione disponibile!", Toast.LENGTH_LONG).show();
 		}		
+	}
+
+
+	private void refreshCategories() {
+		if(lstCategories != null && lstSubcategories != null) {
+			List<String> lstSubcategorie = new ArrayList<String>();
+			
+			spinnerCategorie.getSelectedItem().toString();
+			int idCategoria = 0;
+			for (Subcategories cat : lstSubcategories) {
+				if(idCategoria == cat.id_category)
+					lstSubcategorie.add(cat.name);
+			}
+			ArrayAdapter<String> categorieAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, lstSubcategorie);
+				//categorieAdapter.setDropDownViewResource(resource);
+			spinnerCategorie.setAdapter(categorieAdapter);
+		}
 	}
 
 

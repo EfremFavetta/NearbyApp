@@ -29,7 +29,7 @@ public class Place {
 			place.nome = obj.getString(tag_name);
 			place.description = obj.getString(tag_description);
 			String gps = obj.getString(tag_gps);
-			String[] gpssplit = gps.split(","); 
+			String[] gpssplit = gps.split("\\+");
 			place.lat = Float.parseFloat(gpssplit[0]);
 			place.longit = Float.parseFloat(gpssplit[1]);
 			place.telefono = obj.getString(tag_phone);

@@ -7,7 +7,7 @@ import org.json.JSONObject;
 public class Categories {
 	
 	public static final String tag_id = "id_category";
-	public static final String tag_name = "name";
+	public static final String tag_name = "category_name";
 	
 	
 	public int id;

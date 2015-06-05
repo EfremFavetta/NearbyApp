@@ -6,8 +6,8 @@ import org.json.JSONObject;
 public class Subcategories {
 
 	public static final String tag_id = "id_subcategory";
-	public static final String tag_name = "name";
-	public static final String tag_id_category = "";
+	public static final String tag_name = "subcategory_name";
+	public static final String tag_id_category = "id_category";
 	
 	
 	public int id;
