@@ -46,6 +46,12 @@
             android:label="@string/title_activity_home" >
         </activity>
 
+        <activity
+            android:name="com.progetto.nearby.detailPlaces.DetailPlaceActivity"
+            android:label="@string/title_activity_detail"
+            android:parentActivityName=".HomeActivity" >
+        </activity>
+
         <provider
             android:name=".DatabaseLocale.ContentProvider"
             android:authorities="com.progetto.nearby.databaselocale.contentprovider"
@@ -53,14 +59,9 @@
         </provider>
 
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCFZ20LQndN88DTyMGKJtxfySnYYH3ltYs" />
-        <!-- android:value="AIzaSyBY00f5kJiEtdmvp4LMjgAFR85DuHyRNzY"/> -->
-        <activity
-            android:name="com.progetto.nearby.detailPlaces.DetailPlaceActivity"
-            android:label="@string/title_activity_detail"
-            android:parentActivityName=".HomeActivity" >
-        </activity>
+		    android:name="com.google.android.geo.API_KEY"
+		    android:value="AIzaSyBY00f5kJiEtdmvp4LMjgAFR85DuHyRNzY"/> 
+<!-- 		    android:value="AIzaSyCFZ20LQndN88DTyMGKJtxfySnYYH3ltYs" /> -->
     </application>
 
 </manifest>

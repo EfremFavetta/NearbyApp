@@ -7,15 +7,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -33,12 +31,11 @@ import com.progetto.nearby.Tools;
 import com.progetto.nearby.detailPlaces.DetailPlaceActivity;
 import com.progetto.nearby.models.Place;
 
-public class HomeFragment extends MapFragment implements OnMapReadyCallback, LoaderCallbacks<Cursor>  {
+public class HomeFragment extends MapFragment implements OnMapReadyCallback  {
 
 	private GoogleMap googleMap;
 	private ListView lstPlaces;
 	private static boolean isFirstTimeOpen = true;
-	private HomeListCursorAdapter cursorAdapter;
 	private PlacesAdapter adapter;
 	private ArrayList<Place> allPlaces = new ArrayList<Place>();
 	
@@ -51,12 +48,6 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 		
 		lstPlaces = (ListView)rootView.findViewById(R.id.lstPlaces);
 		getPlaces();
-		lstPlaces.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				enterDetails(id);
-			}
-		});
 		
 		super.onCreateView(inflater, container, savedInstanceState);
 		return rootView;
@@ -65,7 +56,7 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 	private void getPlaces() {
 		if(Tools.isNetworkEnabled(getActivity())) {
 			AsyncHttpClient client = new AsyncHttpClient();
-			client.get(Tools.GET_URL, new JsonHttpResponseHandler(){
+			client.get(Tools.PLACES_URL, new JsonHttpResponseHandler(){
 	
 				@Override
 				public void onSuccess(int statusCode, Header[] headers,	JSONArray response) {
@@ -82,6 +73,21 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 					adapter = new PlacesAdapter(getActivity().getApplicationContext(),
 							allPlaces);
 					lstPlaces.setAdapter(adapter);
+					lstPlaces.setOnItemClickListener(new OnItemClickListener() {
+
+						@Override
+						public void onItemClick(AdapterView<?> arg0, View arg1,
+								int arg2, long arg3) {
+							// TODO Auto-generated method stub
+							enterDetails(arg3);
+//							Intent intent = new Intent(getActivity(), DetailPlaceActivity.class);
+//					    	//intent.putExtra(DetailPlaceActivity.ID_PLACE, (int)id);
+//					    	Bundle placeBundle = new Bundle();
+//					    	placeBundle.putLong(Place.tag_id, arg3);
+//					    	intent.putExtras(placeBundle);
+//					        startActivity(intent);
+						}
+					});
 				}	
 				
 				@Override
@@ -181,20 +187,4 @@ public class HomeFragment extends MapFragment implements OnMapReadyCallback, Loa
 			googleMap.setMyLocationEnabled(false);
 		super.onDestroy();
 	}
-
-	@Override
-	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		
-		return null;
-	}
-
-	@Override
-	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-		cursorAdapter.swapCursor(data);
-	}
-
-	@Override
-	public void onLoaderReset(Loader<Cursor> loader) {
-		cursorAdapter.swapCursor(null);
-	}	
 }
