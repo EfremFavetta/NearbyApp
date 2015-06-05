@@ -319,7 +319,7 @@ public class FiltriActivity extends Activity {
         }
 		return super.onOptionsItemSelected(item);
 	}
-	2
+	
 	private int getDistanzaFromIndex(int index) {
 		switch (index) {
 			case 0:

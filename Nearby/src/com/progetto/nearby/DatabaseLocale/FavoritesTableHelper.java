@@ -2,7 +2,7 @@ package com.progetto.nearby.DatabaseLocale;
 
 import android.provider.BaseColumns;
 
-public class PreferitiTableHelper implements BaseColumns {
+public class FavoritesTableHelper implements BaseColumns {
 
 	public static final String tableName = "Preferiti";
 	public static final String idPlaces = "Places";

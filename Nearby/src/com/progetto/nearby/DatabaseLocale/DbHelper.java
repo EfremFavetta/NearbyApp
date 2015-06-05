@@ -17,7 +17,7 @@ public class DbHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 
-		db.execSQL(PreferitiTableHelper.create);
+		db.execSQL(FavoritesTableHelper.create);
 	}
 
 	@Override
